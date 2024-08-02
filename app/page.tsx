@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { PantryItems } from "@/components/pantry-items";
+import { AddItem } from "@/components/add-item";
 
 export default function Home() {
   return (
@@ -8,8 +9,11 @@ export default function Home() {
       height="100vh"
       display={"flex"}
       justifyContent={"center"}
+      flexDirection={"column"}
       alignItems={"center"}
+      gap={2}
     >
+      <AddItem />
       <Box>
         <Box
           width="800px"

@@ -1,50 +1,42 @@
 "use client";
 
-import { db } from "@/config/firebase";
-import { Box, Stack, Typography } from "@mui/material";
-import { collection, getDocs, query } from "firebase/firestore";
-import { useEffect, useState } from "react";
-
-interface PantryItem {
-  name: string;
-  count: number;
-}
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { useContext, useEffect } from "react";
+import PantryContext from "@/context/context";
 
 export const PantryItems = () => {
-  const [items, setItems] = useState<PantryItem[]>([]);
+  const { items, updateItems, removeItem } = useContext(PantryContext);
 
   useEffect(() => {
-    const pantryItems: PantryItem[] = [];
-    getDocs(collection(db, "pantry-items")).then((docs) => {
-      docs.forEach((doc) => {
-        // console.log(doc.id, doc.data().count);
-        pantryItems.push({
-          name: doc.id,
-          count: doc.data().count,
-        });
-      });
-      console.log(pantryItems);
-      setItems(pantryItems);
-    });
+    !!updateItems && updateItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <Stack width="800px" height="600px" spacing={2} overflow="auto">
-      {items.map(({ name }) => (
-        <Box
-          key={name}
-          width="100%"
-          minHeight="100px"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          bgcolor="#e0f0ff"
-        >
-          <Typography variant="h5">
-            {name.charAt(0).toUpperCase() + name.slice(1)}
-          </Typography>
-        </Box>
-      ))}
+      {!!items &&
+        items.map(({ name, count }) => (
+          <Box
+            key={name}
+            width="100%"
+            minHeight="100px"
+            display="flex"
+            justifyContent="space-around"
+            alignItems="center"
+            bgcolor="#e0f0ff"
+          >
+            <Typography variant="h4">
+              {name.charAt(0).toUpperCase() + name.slice(1)}
+            </Typography>
+            <Typography variant={"h6"} color={"#333"} textAlign={"center"}>
+              Quantity: {count}
+            </Typography>
+            {!!removeItem && (
+              <Button variant="contained" onClick={() => removeItem(name)}>
+                Remove
+              </Button>
+            )}
+          </Box>
+        ))}
     </Stack>
   );
 };
