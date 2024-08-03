@@ -30,6 +30,7 @@ const style = {
 export const AddItem = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [itemName, setItemName] = useState<string>("");
+  const [itemCount, setItemCount] = useState<number>(1);
   const { addItem } = useContext(PantryContext);
 
   const handleOpen = () => setIsModalOpen(true);
@@ -48,17 +49,24 @@ export const AddItem = () => {
           </Typography>
           <Stack width="100%" direction={"row"} spacing={2}>
             <TextField
-              id="outlined-basic"
               label="Item"
               variant="outlined"
               fullWidth
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
             />
+            <TextField
+              error={itemCount < 1}
+              label="Count"
+              type="number"
+              value={itemCount}
+              onChange={(e) => setItemCount(Number(e.target.value))}
+            />
             <Button
-              variant="outlined"
+              variant="contained"
+              disabled={itemCount < 1}
               onClick={() => {
-                addItem(itemName);
+                addItem(itemName, itemCount);
                 setItemName("");
                 handleClose();
               }}

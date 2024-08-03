@@ -19,7 +19,7 @@ interface PantryItem {
 interface IPantryContext {
   items: PantryItem[];
   updateItems: () => Promise<void>;
-  addItem: (itemName: string) => Promise<void>;
+  addItem: (itemName: string, itemCount?: number) => Promise<void>;
   removeItem: (itemName: string) => Promise<void>;
   searchItem: (query: string) => void;
 }
@@ -52,14 +52,14 @@ export const PantryProvider: React.FC<PropsWithChildren> = ({ children }) => {
     });
   };
 
-  const addItem = async (itemName: string) => {
+  const addItem = async (itemName: string, itemCount?: number) => {
     const docRef = doc(collection(db, "pantry-items"), itemName);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const { count } = docSnap.data();
       await setDoc(docRef, { count: count + 1 });
     } else {
-      await setDoc(docRef, { count: 1 });
+      await setDoc(docRef, { count: itemCount ? itemCount : 1 });
     }
     await updateItems();
   };
