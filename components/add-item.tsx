@@ -58,7 +58,7 @@ export const AddItem = () => {
             <Button
               variant="outlined"
               onClick={() => {
-                !!addItem && addItem(itemName);
+                addItem(itemName);
                 setItemName("");
                 handleClose();
               }}
@@ -68,9 +68,8 @@ export const AddItem = () => {
           </Stack>
         </Box>
       </Modal>
-      <Button variant="contained" onClick={handleOpen}>
-        <AddIcon fontSize="small" /> &nbsp;
-        Add New Item
+      <Button variant="contained" color="secondary" onClick={handleOpen}>
+        <AddIcon fontSize="small" /> &nbsp; Add Item
       </Button>
     </>
   );

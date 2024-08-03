@@ -13,14 +13,25 @@ export default function Home() {
       flexDirection={"column"}
       alignItems={"center"}
       gap={2}
+      sx={{
+        backgroundColor: "#D9AFD9",
+        backgroundImage: "linear-gradient(176deg, #D9AFD9 0%, #97D9E1 100%)",
+      }}
     >
-      <SearchItem />
-      <AddItem />
+      <Box
+        width="800px"
+        display={"flex"}
+        justifyContent={"space-between"}
+        gap={4}
+      >
+        <AddItem />
+        <SearchItem />
+      </Box>
       <Box>
         <Box
           width="800px"
           height="100px"
-          bgcolor="#ADD8E6"
+          bgcolor="#ADD8E9"
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}

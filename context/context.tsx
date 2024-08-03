@@ -17,14 +17,22 @@ interface PantryItem {
 }
 
 interface IPantryContext {
-  items?: PantryItem[];
-  updateItems?: () => Promise<void>;
-  addItem?: (itemName: string) => Promise<void>;
-  removeItem?: (itemName: string) => Promise<void>;
-  searchItem?: (query: string) => void;
+  items: PantryItem[];
+  updateItems: () => Promise<void>;
+  addItem: (itemName: string) => Promise<void>;
+  removeItem: (itemName: string) => Promise<void>;
+  searchItem: (query: string) => void;
 }
 
-const PantryContext = createContext<IPantryContext>({});
+const defaultContext: IPantryContext = {
+  items: [],
+  updateItems: async () => {},
+  addItem: async () => {},
+  removeItem: async () => {},
+  searchItem: async () => {},
+};
+
+const PantryContext = createContext<IPantryContext>(defaultContext);
 
 export const PantryProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [items, setItems] = useState<PantryItem[]>([]);

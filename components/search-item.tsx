@@ -2,17 +2,17 @@
 
 import PantryContext from "@/context/context";
 import { Autocomplete, Box, TextField } from "@mui/material";
-import { KeyboardEvent, ReactEventHandler, useContext } from "react";
+import { SyntheticEvent, useContext } from "react";
 
 export const SearchItem = () => {
   const { items, searchItem } = useContext(PantryContext);
 
-  if (!items || items.length < 1) return null;
+  if (items.length < 1) return null;
 
-  const handleChange = (e: any) => {
-    const queryString = e.target.textContent;
+  const handleChange = (e: SyntheticEvent) => {
+    const queryString = (e.target as HTMLLIElement).textContent as string;
     console.log(queryString);
-    !!searchItem && searchItem(queryString);
+    searchItem(queryString);
   };
 
   return (
@@ -24,7 +24,7 @@ export const SearchItem = () => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Search item"
+            label="Search Item"
             InputProps={{
               ...params.InputProps,
               type: "search",
@@ -33,6 +33,9 @@ export const SearchItem = () => {
         )}
         fullWidth
         onInputChange={handleChange}
+        sx={{
+          backgroundColor: "#e0f0ff",
+        }}
       />
     </Box>
   );
