@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
 
 const style = {
   position: "absolute",
@@ -68,6 +69,7 @@ export const AddItem = () => {
         </Box>
       </Modal>
       <Button variant="contained" onClick={handleOpen}>
+        <AddIcon fontSize="small" /> &nbsp;
         Add New Item
       </Button>
     </>

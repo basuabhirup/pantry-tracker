@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { createContext, PropsWithChildren, useState } from "react";
 import { db } from "@/config/firebase";
@@ -21,6 +21,7 @@ interface IPantryContext {
   updateItems?: () => Promise<void>;
   addItem?: (itemName: string) => Promise<void>;
   removeItem?: (itemName: string) => Promise<void>;
+  searchItem?: (query: string) => void;
 }
 
 const PantryContext = createContext<IPantryContext>({});
@@ -68,8 +69,22 @@ export const PantryProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
     await updateItems();
   };
+
+  const searchItem = async (query: string) => {
+    if (!query) {
+      await updateItems();
+    } else {
+      const newItems = items.filter((item) =>
+        item.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setItems(newItems);
+    }
+  };
+
   return (
-    <PantryContext.Provider value={{ items, updateItems, addItem, removeItem }}>
+    <PantryContext.Provider
+      value={{ items, updateItems, addItem, removeItem, searchItem }}
+    >
       {children}
     </PantryContext.Provider>
   );

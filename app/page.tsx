@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { PantryItems } from "@/components/pantry-items";
 import { AddItem } from "@/components/add-item";
+import { SearchItem } from "@/components/search-item";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       alignItems={"center"}
       gap={2}
     >
+      <SearchItem />
       <AddItem />
       <Box>
         <Box
