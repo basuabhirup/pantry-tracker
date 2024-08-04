@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pantry Tracker App
+
+## Demo
+
+Check out the live application: [Pantry Tracker App](https://pantry-tracker-app-nu.vercel.app)
+
+## Overview
+
+The Pantry Tracker App is a comprehensive tool designed to help users manage their pantry items efficiently. The application allows users to add, remove, and search for items in their pantry. Additionally, it features an AI-based recipe suggestion functionality to provide users with recipe ideas based on the items available in their pantry.
+
+## Features
+
+1. **Add Item**: Users can add items to their pantry. If an item already exists, the item count is incremented.
+2. **Remove Item**: Users can remove items from their pantry. If an item's count is 1, the item is deleted from the pantry.
+3. **Search Item**: Users can search for items in their pantry using a search bar with a `SearchIcon`.
+4. **Update Items**: The pantry items are updated in real-time as changes are made.
+5. **AI-based Recipe Suggestion**: Users can get recipe suggestions based on the items available in their pantry using the AI prompt functionality.
+
+## Tech Stack
+
+- **React.js and Next.js**: For building the user interface. Although Next.js is included, we have not implemented any server-side rendering yet.
+- **Material UI**: For UI components and styling.
+- **Firebase Firestore**: For the real-time database to store pantry items.
+- **OpenRouter AI API**: For AI-based recipe suggestions using the open source AI model "meta-llama/llama-3-8b-instruct:free", which is a free, rate-limited version of Llama 3.1 8B Instruct.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js and npm
+- OpenRouter AI API key
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```sh
+   git clone https://github.com/basuabhirup/pantry-tracker.git
+   cd pantry-tracker
+   ```
 
-## Learn More
+2. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+   ```sh
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Set up environment variables:
+   Create a `.env.local` file in the root directory and add your Firebase and OpenRouter API keys:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```env
+   NEXT_PUBLIC_OPENROUTER_API_KEY=your_openrouter_api_key
+   ```
 
-## Deploy on Vercel
+4. Run the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```sh
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+5. Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License.
