@@ -5,7 +5,6 @@ import { useContext, useEffect } from "react";
 import PantryContext from "@/context/context";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 export const PantryItems = () => {
   const { items, addItem, updateItems, removeItem } = useContext(PantryContext);

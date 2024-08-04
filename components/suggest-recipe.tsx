@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { promptAI } from "@/openrouter/prompt";
 import { marked } from "marked";
+import { Loader } from "./loader";
 
 const style = {
   position: "absolute",
@@ -29,22 +30,27 @@ const style = {
 export const SuggestRecipe = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [recipeSuggestion, setRecipeSuggestion] = useState<string>("");
-  const { items } = useContext(PantryContext);
+  const { items, recipeSuggestion, setRecipeSuggestion } = useContext(PantryContext);
+
+  if (items.length < 1) return null;
+
+  const suggestRecipe = async () => {
+    setIsLoading(true);
+    const prompt = `Please suggest some delicious food recipe assuming I have only these items in my pantry: 
+      ${JSON.stringify(items)}. Start your response with "Here are a few recipe suggestions...`;
+    console.log(prompt);
+    const response = await promptAI(prompt);
+    console.log(response);
+    const responseHtml = await marked.parse(response);
+    console.log(responseHtml);
+    setRecipeSuggestion(responseHtml);
+    setIsLoading(false);
+  };
 
   const handleOpen = async () => {
     setIsModalOpen(true);
     if (!recipeSuggestion) {
-      setIsLoading(true);
-      const prompt = `Please suggest some delicious food recipe assuming I have only these items in my pantry: 
-      ${JSON.stringify(items)}. Start your response with "Here are a few recipe suggestions...`;
-      console.log(prompt);
-      const response = await promptAI(prompt);
-      console.log(response);
-      const responseHtml = await marked.parse(response);
-      console.log(responseHtml);
-      setRecipeSuggestion(responseHtml);
-      setIsLoading(false);
+      await suggestRecipe();
     }
   };
   const handleClose = () => setIsModalOpen(false);
@@ -58,19 +64,36 @@ export const SuggestRecipe = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {!isLoading && (
+          <Box display="flex" justifyContent={"space-between"}>
             <Typography
               id="modal-modal-title"
-              variant="h6"
-              component="h2"
+              variant="h5"
+              component="h5"
               display={"flex"}
               alignItems={"center"}
               gap={2}
             >
-              <AutoAwesomeIcon fontSize="medium" /> AI Suggested Recipe List
+              <AutoAwesomeIcon fontSize="medium" /> Recipe Suggestions
             </Typography>
+
+            <Button
+              variant="contained"
+              color="warning"
+              onClick={suggestRecipe}
+              disabled={isLoading}
+            >
+              <AutoAwesomeIcon fontSize="small" /> &nbsp; Try Again
+            </Button>
+          </Box>
+          {isLoading && (
+            <Box
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Loader />
+            </Box>
           )}
-          {isLoading && <p>Cooking up ideas..</p>}
           {!isLoading && (
             <div
               dangerouslySetInnerHTML={{ __html: recipeSuggestion }}
@@ -79,8 +102,14 @@ export const SuggestRecipe = () => {
           )}
         </Box>
       </Modal>
-      <Button variant="contained" color="warning" onClick={handleOpen}>
-        <AutoAwesomeIcon fontSize="small" /> &nbsp; Suggest Recipe
+      <Button
+        variant="contained"
+        color="warning"
+        onClick={handleOpen}
+        disabled={isLoading}
+      >
+        <AutoAwesomeIcon fontSize="small" /> &ensp;
+        {recipeSuggestion.length > 0 ? "Recipe Suggestions" : "Suggest Recipe"}
       </Button>
     </>
   );

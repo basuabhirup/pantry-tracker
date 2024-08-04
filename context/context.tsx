@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, PropsWithChildren, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  useState,
+} from "react";
 import { db } from "@/config/firebase";
 import {
   collection,
@@ -22,6 +28,8 @@ interface IPantryContext {
   addItem: (itemName: string, itemCount?: number) => Promise<void>;
   removeItem: (itemName: string) => Promise<void>;
   searchItem: (query: string) => void;
+  recipeSuggestion: string;
+  setRecipeSuggestion: Dispatch<SetStateAction<string>>;
 }
 
 const defaultContext: IPantryContext = {
@@ -30,12 +38,15 @@ const defaultContext: IPantryContext = {
   addItem: async () => {},
   removeItem: async () => {},
   searchItem: async () => {},
+  recipeSuggestion: "",
+  setRecipeSuggestion: () => {},
 };
 
 const PantryContext = createContext<IPantryContext>(defaultContext);
 
 export const PantryProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [items, setItems] = useState<PantryItem[]>([]);
+  const [recipeSuggestion, setRecipeSuggestion] = useState<string>("");
 
   const updateItems = async () => {
     const pantryItems: PantryItem[] = [];
@@ -49,6 +60,7 @@ export const PantryProvider: React.FC<PropsWithChildren> = ({ children }) => {
       });
       // console.log(pantryItems);
       setItems(pantryItems);
+      setRecipeSuggestion("");
     });
   };
 
@@ -97,6 +109,8 @@ export const PantryProvider: React.FC<PropsWithChildren> = ({ children }) => {
         addItem,
         removeItem,
         searchItem,
+        recipeSuggestion,
+        setRecipeSuggestion,
       }}
     >
       {children}
