@@ -69,7 +69,9 @@ export const PantryProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const { count } = docSnap.data();
-      await setDoc(docRef, { count: count + 1 });
+      await setDoc(docRef, {
+        count: itemCount ? count + itemCount : count + 1,
+      });
     } else {
       await setDoc(docRef, { count: itemCount ? itemCount : 1 });
     }

@@ -68,6 +68,7 @@ export const AddItem = () => {
               onClick={() => {
                 addItem(itemName, itemCount);
                 setItemName("");
+                setItemCount(1);
                 handleClose();
               }}
             >
