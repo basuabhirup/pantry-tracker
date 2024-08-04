@@ -47,7 +47,7 @@ export const PantryProvider: React.FC<PropsWithChildren> = ({ children }) => {
           ...doc.data(),
         });
       });
-      //   console.log(pantryItems);
+      // console.log(pantryItems);
       setItems(pantryItems);
     });
   };
@@ -91,7 +91,13 @@ export const PantryProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <PantryContext.Provider
-      value={{ items, updateItems, addItem, removeItem, searchItem }}
+      value={{
+        items,
+        updateItems,
+        addItem,
+        removeItem,
+        searchItem,
+      }}
     >
       {children}
     </PantryContext.Provider>

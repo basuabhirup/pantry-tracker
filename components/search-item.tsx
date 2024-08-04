@@ -16,7 +16,7 @@ export const SearchItem = () => {
   };
 
   return (
-    <Box width="300px">
+    <Box width="150px">
       <Autocomplete
         freeSolo
         disableClearable

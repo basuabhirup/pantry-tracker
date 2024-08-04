@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { PantryItems } from "@/components/pantry-items";
 import { AddItem } from "@/components/add-item";
 import { SearchItem } from "@/components/search-item";
+import { SuggestRecipe } from "@/components/suggest-recipe";
 
 export default function Home() {
   return (
@@ -13,10 +14,6 @@ export default function Home() {
       flexDirection={"column"}
       alignItems={"center"}
       gap={2}
-      sx={{
-        backgroundColor: "#D9AFD9",
-        backgroundImage: "linear-gradient(176deg, #D9AFD9 0%, #97D9E1 100%)",
-      }}
     >
       <Box
         width="800px"
@@ -25,6 +22,7 @@ export default function Home() {
         gap={4}
       >
         <AddItem />
+        <SuggestRecipe />
         <SearchItem />
       </Box>
       <Box>
@@ -37,7 +35,7 @@ export default function Home() {
           alignItems={"center"}
           marginBottom={"2px"}
         >
-          <Typography variant="h3" color="#333" textAlign="center">
+          <Typography variant="h3" color="#333" textAlign="center" fontFamily={"inherit"}>
             Pantry Items
           </Typography>
         </Box>
